@@ -1,9 +1,71 @@
 package oop2.tp3.ejercicio3;
-
-import java.time.LocalDate;
 import java.util.List;
 
-enum TipoDeGasto {
+public class ReporteDeGastos {
+
+    private int gastosDeComida;
+    private int total;
+
+    public ReporteDeGastos() {
+        this.total = 0;
+        this.gastosDeComida = 0;
+    }
+
+    public String imprimir(List<Gasto> gastos, String fecha) {  //Falta formatear
+
+        this.gastosDeComida = (int) calcularMontoComidas(gastos);
+        this.total = (int) calcularTotal(gastos);
+
+        for (Gasto gasto : gastos) {
+            asignarMarca(gasto);
+        }
+
+        return formatearReporte(gastos, fecha);
+    }
+
+    public void asignarMarca (Gasto gasto){
+            gasto.marcarPorExcesoComidas();
+    }
+
+
+    private String formatearReporte(List<Gasto> listaGastos, String fecha) {
+        StringBuilder detalle = new StringBuilder();
+
+        detalle.append("Expenses ").append(fecha).append("\n");
+
+        for(Gasto gasto : listaGastos){
+            detalle.append(gasto).append("\n");
+        }
+
+        detalle.append("Gastos de comida: ").append(gastosDeComida).append("\n");
+        detalle.append("Total de gastos: ").append(total).append("\n");
+
+        return detalle.toString();
+    }
+
+    public double calcularMontoComidas (List<Gasto> gastos){
+        double gastoComida = 0;
+        for(Gasto gasto : gastos){
+            if(gasto.tipoGasto().esComida()){
+                gastoComida += gasto.monto();
+            }
+        }
+        return gastoComida;
+    }
+
+    public double calcularTotal(List<Gasto> gastos) {
+        double total = 0;
+        for (Gasto gasto : gastos) {
+            total += gasto.monto();
+        }
+        return total;
+    }
+
+
+      /*
+      ANTES:
+
+      enum TipoDeGasto {
     CENA, DESAYUNO, ALQUILER_AUTO
 }
 
@@ -48,4 +110,9 @@ public class ReporteDeGastos {
         System.out.println("Gastos de comida: " + gastosDeComida);
         System.out.println("Total de gastos: " + total);
     }
+}
+
+
+
+      */
 }

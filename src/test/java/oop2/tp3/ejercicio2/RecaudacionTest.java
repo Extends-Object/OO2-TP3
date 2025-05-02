@@ -14,9 +14,10 @@ public class RecaudacionTest {
 
     @Test
     public void testWhereGivenCompany() throws IOException {
-        Map<String, String> options = new HashMap<String, String>();
-        options.put("company_name", "Facebook");
+        Map<String, String> options = new HashMap<String, String>();                //Crea una coleccion
+        options.put("company_name", "Facebook");                       //Establece lo que quiere buscar
         assertEquals(Recaudacion.where(options).size(), 7);
+        //Retorna el tamaño de una lista generada y verifica si es 7 ---> SI SON 7 LOS ELEMENTOS QUE COINCIDEN CON ESE DUO CLAVE VALOR
     }
 
     @Test

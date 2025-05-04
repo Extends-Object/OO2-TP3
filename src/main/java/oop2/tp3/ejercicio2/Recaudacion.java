@@ -190,6 +190,7 @@ public class Recaudacion {
         - Separar las responsabilidades
         - Reducir repeticiones con el filtrado
         - Mejorar la legibilidad
+        - Evitar codigo repetido
 
     SOLUCION QUE PLANTEE MAL:
         csvData = filtrar(csvData, "company_name", 1, options);

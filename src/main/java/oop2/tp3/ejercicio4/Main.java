@@ -13,10 +13,10 @@ public class Main {
 
         var repo = new PersonaRepository(jdbi);             //Tiene un metodo que busca por nombre
 
-        var personas = repo.buscarPorNombre("Vla");     //Ejecuta metodo que busca una persona por fragmento de texto
+        var personas = repo.buscarPorNombre("Vla");  //Ejecuta metodo que busca una persona por fragmento de texto
 
         /*
-        if (personas != null) {                                     //Si retorna algo el resultset imprime lo que encontró
+        if (personas != null) {                                  //Si retorna algo el resultset imprime lo que encontró
             for (Persona persona : personas) {
                 System.out.println(persona.nombre() + " " + persona.apellido());
             }
@@ -86,7 +86,7 @@ public class Main {
     --------------------------------------------  RESOLUCION  ----------------------------------------------------------
 
     PRIMER PASO ---> RECONOCER LO QUE RETORNA NULL
-                ---> Soluciones:
+    SEGUNDO PASO --> Soluciones:
                         - Para COLECCIONES: retornar una coleccion vacia
                         - Para OBJETOS: uso de optional
 

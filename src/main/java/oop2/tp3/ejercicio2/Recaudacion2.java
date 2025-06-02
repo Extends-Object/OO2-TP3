@@ -65,7 +65,6 @@ public class Recaudacion2 {
             csvData = results;
         }
 
-
 //        filtrar(COMPANY_NAME);
 //        filtrar(CITY);
 //        filtrar(STATE);
@@ -78,6 +77,7 @@ public class Recaudacion2 {
         this.opcionesFiltrado = options;
     }
 
+    /*
     private void filtrar(String columna) {
         if (opcionesFiltrado.containsKey(columna)) {
             List<String[]> results = new ArrayList<String[]>();     //filtra por una columna especifica
@@ -90,6 +90,7 @@ public class Recaudacion2 {
             csvData = results;
         }
     }
+    */
 
     private List<Map<String, String>> formatearResultado(List<String[]> csvData){
         List<Map<String, String>> output = new ArrayList<Map<String, String>>();

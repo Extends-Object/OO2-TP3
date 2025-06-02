@@ -10,11 +10,10 @@ public class Libro {
     */
 
     private GeneroLibro genero;
-
     private String nombre;
     //private int codigoPrecio;
 
-    //CONSTRUCTOR
+
     public Libro(String nombre, GeneroLibro genero) {
         this.nombre = nombre;
         //this.codigoPrecio = priceCode;
@@ -25,16 +24,22 @@ public class Libro {
         return genero;
     }
 
+    public String nombre() {
+        return nombre;
+    }
+
+    public double calcularMonto(int diasAlquilado) {
+        return this.genero.calcularMonto(diasAlquilado);
+    }
+
+    public int calcularPuntosAlquilerFrecuente(int diasAlquilados) {
+        return this.genero.calcularPuntosPorAlquilerFrecuente(diasAlquilados);
+    }
+
     /*
     //GET CODIGO
     public int codigoPrecio() {
         return codigoPrecio;
     }
     */
-
-
-    //GET NOMBRE LIBRO
-    public String nombre() {
-        return nombre;
-    }
 }

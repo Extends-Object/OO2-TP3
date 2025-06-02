@@ -16,4 +16,12 @@ public class CopiaLibro {
     public Libro libro() {
         return libro;
     }
+
+    public double calcularMonto(int diasAlquilados) {
+        return this.libro.calcularMonto(diasAlquilados);
+    }
+
+    public int calcularPuntosAlquilerFrecuente(int diasAlquilados) {
+        return this.libro.calcularPuntosAlquilerFrecuente(diasAlquilados);
+    }
 }

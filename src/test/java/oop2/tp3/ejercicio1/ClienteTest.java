@@ -31,6 +31,8 @@ public class ClienteTest {
     Alquiler alquilerPinocho;
     Alquiler alquilerCaperucita;
 
+    ResumenCliente resumen;
+
     @BeforeEach
     public void setUp (){
 
@@ -84,11 +86,14 @@ public class ClienteTest {
         cliente.alquilar(alquilerElTunel);
         cliente.alquilar(alquilerAntesDelFin);
 
-        Object[] resultado = cliente.calcularDeudaYPuntosObtenidos();
+        resumen = cliente.calcularDeudaYPuntosObtenidos();
 
         //Verify
-        assertEquals(10, cliente.totalAcumulado(), "El total calculado no es correcto");
-        assertEquals(2, cliente.puntosAlquilerFrecuente, "La cantidad de puntos asignados no coincide");
+        assertEquals(10, resumen.getMontoFinal(), "El total calculado no es correcto");
+        assertEquals(2, resumen.getPuntosFrecuente(), "El total calculado no es correcto");
+
+        //assertEquals(10, cliente.totalAcumulado(), "El total calculado no es correcto");
+        //assertEquals(2, cliente.puntosAlquilerFrecuente(), "La cantidad de puntos asignados no coincide");
         //Los puntos del alquiler frecuente son por cada alquiler que se hace
     }
 
@@ -101,11 +106,11 @@ public class ClienteTest {
         cliente.alquilar(alquilerLaOdisea);
         cliente.alquilar(alquilerLaIliada);
 
-        Object[] resultado = cliente.calcularDeudaYPuntosObtenidos();
+        resumen = cliente.calcularDeudaYPuntosObtenidos();
 
         //Verify
-        assertEquals(24, cliente.totalAcumulado(), "El total calculado no es correcto");
-        assertEquals(3, cliente.puntosAlquilerFrecuente, "La cantidad de puntos asignados no coincide");
+        assertEquals(24, resumen.getMontoFinal(), "El total calculado no es correcto");
+        assertEquals(3, resumen.getPuntosFrecuente(), "La cantidad de puntos asignados no coincide");
     }
 
     @Test
@@ -117,11 +122,11 @@ public class ClienteTest {
         cliente.alquilar(alquilerPinocho);
         cliente.alquilar(alquilerCaperucita);
 
-        Object[] resultado = cliente.calcularDeudaYPuntosObtenidos();
+        resumen = cliente.calcularDeudaYPuntosObtenidos();
 
         //Verify
-        assertEquals(4.5, cliente.totalAcumulado(), "El total calculado no es correcto");
-        assertEquals(2, cliente.puntosAlquilerFrecuente, "La cantidad de puntos asignados no coincide");
+        assertEquals(4.5, resumen.getMontoFinal(), "El total calculado no es correcto");
+        assertEquals(2, resumen.getPuntosFrecuente(), "La cantidad de puntos asignados no coincide");
     }
 
 }

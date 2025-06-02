@@ -1,6 +1,5 @@
 package oop2.tp3.ejercicio2;
 
-
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -9,36 +8,42 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-public class RecaudacionTest {
+public class Recaudacion2Test {
 
     @Test
     public void testWhereGivenCompany() throws IOException {
-        Map<String, String> options = new HashMap<String, String>();                //Crea una coleccion
-        options.put("company_name", "Facebook");                       //Establece lo que quiere buscar
-        assertEquals(Recaudacion.where(options).size(), 7);
-        //Retorna el tamaño de una lista generada y verifica si es 7 ---> SI SON 7 LOS ELEMENTOS QUE COINCIDEN CON ESE DUO CLAVE VALOR
+        Map<String, String> options = new HashMap<String, String>();
+        options.put("company_name", "Facebook");
+        Recaudacion2 r = new Recaudacion2(new LectorCSV("src/main/resources/data.csv"));
+        //assertEquals(Recaudacion2.where(options).size(), 7);
+        assertEquals(r.where(options).size(), 7);
     }
 
     @Test
     public void testWhereGivenCity() throws IOException {
         Map<String, String> options = new HashMap<String, String>();
         options.put("city", "Tempe");
-        assertEquals(Recaudacion.where(options).size(), 3);
+        Recaudacion2 r = new Recaudacion2(new LectorCSV("src/main/resources/data.csv"));
+        //assertEquals(Recaudacion2.where(options).size(), 3);
+        assertEquals(r.where(options).size(), 3);
     }
 
     @Test
     public void testWhereGivenState() throws IOException {
         Map<String, String> options = new HashMap<String, String>();
         options.put("state", "CA");
-        assertEquals(Recaudacion.where(options).size(), 873);
+        Recaudacion2 r = new Recaudacion2(new LectorCSV("src/main/resources/data.csv"));
+        //assertEquals(Recaudacion2.where(options).size(), 873);
+        assertEquals(r.where(options).size(), 873);
     }
 
     @Test
     public void testWhereGivenRound() throws IOException {
         Map<String, String> options = new HashMap<String, String>();
         options.put("round", "a");
-        assertEquals(Recaudacion.where(options).size(), 582);
+        Recaudacion2 r = new Recaudacion2(new LectorCSV("src/main/resources/data.csv"));
+        //assertEquals(Recaudacion2.where(options).size(), 582);
+        assertEquals(r.where(options).size(), 582);
     }
 
     @Test
@@ -46,21 +51,27 @@ public class RecaudacionTest {
         Map<String, String> options = new HashMap<String, String>();
         options.put("round", "a");
         options.put("company_name", "Facebook");
-        assertEquals(Recaudacion.where(options).size(), 1);
+        Recaudacion2 r = new Recaudacion2(new LectorCSV("src/main/resources/data.csv"));
+        //assertEquals(Recaudacion2.where(options).size(), 1);
+        assertEquals(r.where(options).size(), 1);
     }
 
     @Test
     public void testWhereNotExists() throws IOException {
         Map<String, String> options = new HashMap<String, String>();
         options.put("company_name", "NotFacebook");
-        assertEquals(Recaudacion.where(options).size(), 0);
+        Recaudacion2 r = new Recaudacion2(new LectorCSV("src/main/resources/data.csv"));
+        //assertEquals(Recaudacion2.where(options).size(), 0);
+        assertEquals(r.where(options).size(), 0);
     }
 
     @Test
     public void testWhereCorrectKeys() throws IOException {
         Map<String, String> options = new HashMap<String, String>();
         options.put("company_name", "Facebook");
-        Map<String, String> row = Recaudacion.where(options).get(0);
+        Recaudacion2 r = new Recaudacion2(new LectorCSV("src/main/resources/data.csv"));
+        //Map<String, String> row = Recaudacion2.where(options).get(0);
+        Map<String, String> row = r.where(options).get(0);
 
         assertEquals(row.get("permalink"), "facebook");
         assertEquals(row.get("company_name"), "Facebook");

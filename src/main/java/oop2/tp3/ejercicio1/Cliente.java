@@ -5,73 +5,62 @@ import java.util.List;
 
 public class Cliente {
 
-    private double totalAcumulado = 0;
-
-    private List<Alquiler> alquileres = new ArrayList<Alquiler>();      //Que es esta notacion?
     private String name;
 
-    int puntosAlquilerFrecuente = 0;
+    private double totalAcumulado;
+    private int puntosAlquilerFrecuente;
+    private List<Alquiler> alquileres;
 
-    //constructor
+
     public Cliente(String nombre) {
         this.name = nombre;
+        this.totalAcumulado = 0;
+        this.puntosAlquilerFrecuente = 0;
+        this.alquileres = new ArrayList<Alquiler>();
     }
 
-    //Rellena la lista de alquileres
-    public void alquilar(Alquiler rental) {                 //Agrega los alquileres a la lista del cliente
+
+    public void alquilar(Alquiler rental) {
         alquileres.add(rental);
     }
 
 
-    //Calculador
-    public Object[] calcularDeudaYPuntosObtenidos() {
+    public ResumenCliente calcularDeudaYPuntosObtenidos() {
 
-        Object[] resultado = new Object[2];     //Crea un object con campos para el total y los puntos frecuentes
-        double total = 0;                       //Esto esta bien ---- Es el acumulador
-        //int puntosAlquilerFrecuente = 0;        //Esto esta bien
+        //Object[] resultado = new Object[2];
+        //Podria reemplazarla con una clase tipo Resumen o ResumenCliente con esos datos para evitar el uso de Object
 
+        for (Alquiler alquiler : alquileres) {
 
-        for (Alquiler alquiler : alquileres) {      //Recorre la lista de alquileres
+            //Por cada alquiler le suma el monto que vale ---> Puedo aplicar Extract Method?
+            //totalAcumulado += calcularTotalAcumulado(alquiler);
+            //totalAcumulado += alquiler.copia().libro().genero().calcularMonto(alquiler);
 
-            //Por cada alquiler, le suma el monto que vale
-            total += alquiler.copia().libro().genero().calcularMonto(alquiler);
-            //Suma el punto base mas un punto extra si es nuevo lanzamiento
-            puntosAlquilerFrecuente += alquiler.copia().libro().genero().calcularPuntosPorAlquilerFrecuente(alquiler);
+            totalAcumulado += alquiler.calcularTotal();
 
-            /*
-            double monto = 0;                       //Monto actual
-            // determine amounts for each line
-            switch (alquiler.copia().libro().codigoPrecio()) {              //Obtiene el precio del libro
-                case Libro.REGULARES:                                       //El codigo de precio es la constante
-                    monto = Regulares.calcularMonto(alquiler);
-                    break;
-                case Libro.NUEVO_LANZAMIENTO:                               //No agrega puntos extra al monto
-                    monto += NuevoLanzamiento.calcularMonto(alquiler);      //Calcula como esta
-                    break;
-                case Libro.INFANTILES:
-                    monto = Infantiles.calcularMonto(alquiler, monto);
-                    break;
-            }
-            total += monto;                                                 //El total acumula el monto de cada alquiler
+            //Suma el punto base mas el punto extra si es nuevo lanzamiento ---> Aplico Extract Method :)
+            //NO SIRVE DE NADA ----> Igualmente rompe Ley de DEMETER
+            //puntosAlquilerFrecuente += calcularPuntosPorAlquilerFrecuente(alquiler);
+            //puntosAlquilerFrecuente += alquiler.copia().libro().genero().calcularPuntosPorAlquilerFrecuente(alquiler);
 
-            // sumo puntos por alquiler
-            puntosAlquilerFrecuente++;                                      //Suma puntos por alquiler
-
-            // bonus por dos días de alquiler de un nuevo lanzamiento
-            if ((alquiler.copia().libro().codigoPrecio() == Libro.NUEVO_LANZAMIENTO)
-                    && alquiler.diasAlquilados() > 1) {                     //Suma un punto extra por nuevo lanzamiento
-                puntosAlquilerFrecuente++;
-            }
-            */
-
+            puntosAlquilerFrecuente += alquiler.calcularPuntosAlquilerFrecuente();
         }
 
-        totalAcumulado = total;
+        //resultado[0] = totalAcumulado;
+        //resultado[1] = puntosAlquilerFrecuente;
 
-        resultado[0] = total;                                               //Van al array de Object
-        resultado[1] = puntosAlquilerFrecuente;
-        return resultado;                                                   //Retorna el Array de Object con los datos
+        ResumenCliente resumen = new ResumenCliente(totalAcumulado, puntosAlquilerFrecuente);
+
+        return resumen;
     }
+
+//    private static int calcularPuntosPorAlquilerFrecuente(Alquiler alquiler) {
+//        return alquiler.copia().libro().genero().calcularPuntosPorAlquilerFrecuente(alquiler);
+//    }
+//
+//    private static double calcularTotalAcumulado(Alquiler alquiler) {
+//        return alquiler.copia().libro().genero().calcularMonto(alquiler);
+//    }
 
 
     //SOLO PARA EL TEST
@@ -79,12 +68,17 @@ public class Cliente {
         return  this.totalAcumulado;
     }
 
+    public double puntosAlquilerFrecuente(){ return this.puntosAlquilerFrecuente; }
 }
 
 
 /*
-PRIMER PASO: Eliminar el switch por Polimorfismo.
-    ----->Resuelve: poder agregar nuevos tipos de libros sin tocar la clase Libro y sin tocar el Switch de Cliente
+            --- Heuristica del Extract Method? ---> Si el metodo no necesita nada de this entonces puede
+                                                          (o debería) ser static
+            --- El ide por defecto propone que el metodo extraído sea static si no accede a atributos de instancia
+
+PRIMER PASO: Eliminar el switch con Polimorfismo
+    ----->Resuelve: poder agregar nuevos tipos de libros sin tocar la clase Libro
     ----->Principio Abierto/Cerrado — Open/Closed Principle
 
 SEGUNDO PASO: Extraer el codigo de los case del Switch a su metodo abstracto correspondiente
@@ -94,32 +88,33 @@ SEGUNDO PASO: Extraer el codigo de los case del Switch a su metodo abstracto cor
     Por eso debe recibir la instancia de Alquiler
 
     Principio de Responsabilidad Única (SRP): Cada clase de estrategia de precios (Regulares, NuevoLanzamiento, Infantil)
-    ahora tiene una única responsabilidad: calcular el precio de alquiler para un tipo específico de libro.
+    ahora tiene su propia única responsabilidad que es calcular el precio de alquiler para ese tipo específico de libro.
 
-    Principio Abierto/Cerrado (OCP): Si en el futuro se necesita agregar un nuevo tipo de libro con una lógica de precios
-    diferente, crear una nueva clase que implemente GeneroLibro.
-    No hay que modificar la clase Cliente (que es quien utiliza estas estrategias).
+    Principio Abierto/Cerrado (OCP): Si en el futuro quiero agregar un nuevo tipo de libro con una lógica de precios
+    diferente solamente tengo qye crear una nueva clase que implemente GeneroLibro
+    No hay que modificar la clase Cliente (que es el que usa esa logica)
 
 TERCER PASO: Cambiar clase Libro para que tenga una instancia del genero y eliminar las constantes que usaba
 
-CUARTO PASO: Eliminar Switch ---> Aun mantiene una dependencia con las constantes eliminadas
+CUARTO PASO: Eliminar Switch --->
     ----->Tecnica de desacoplamiento
 
 QUINTO PASO: Logica de calculo de puntos frecuentes
     ----->Posible solucion: Transformar interface a clase abstracta y agregar metodo abstracto que calcule esa logica.
-                            Las demas clases concretas solo poseen el cuerpo vacio mientras que NuevoLanzamiento
-                            posee la logica desarrollada.
+                            Las demas clases concretas solo tienen el cuerpo vacio mientras que NuevoLanzamiento
+                            tiene la logica desarrollada
     ----->Problema: No respeta el ISP (Principio de segregacion de interface). Si se convierte la interface a clase
                     abstracta y se agrega el metodo abstracto las demas clases se van a ver obligadas a implementarlo
-                    aunque tengan cuerpo vacio o retornen 0. Esto les agrega una responsabilidad que no les corresponde
-                    tener.
+                    aunque tengan cuerpo vacio o retornen 0. (esto les agrega una responsabilidad que no les corresponde
+                    tener ?¿).
     ----->Solucion: Dejar a la interface como esta, agregar el metodo e implementar la logica diferente para NuevoLanzamiento.
-                    Las demas clases retornaran el mismo valor, no cambiara en nada.
+                    Las demas clases retornaran el mismo valor, (no cambia nada))
 
 SEXTO PASO: Reacomodar el metodo en Cliente.
 
 SEPTIMO PASO: ESTRUCTURA DE LA CLASE TEST
     ----->Ideal: tener un Test por cada Genero ---> Todos aplican diferente logica de calculo
+                                               ---> HAY QUE TESTEAR TOODO MAR
 
 
 */

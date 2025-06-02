@@ -32,12 +32,15 @@ public class Main {
         yo.alquilar(alquilerElTunel);
         yo.alquilar(alquilerAntesDelFin);
 
+        ResumenCliente resumen = yo.calcularDeudaYPuntosObtenidos();
+        System.out.println("Resumen de pago: " + resumen.toString());
+
 
         //CALCULO DE LA DEUDA
-        Object[] resultado = yo.calcularDeudaYPuntosObtenidos();
+        //Object[] resultado = yo.calcularDeudaYPuntosObtenidos();
 
         //QUE ES 0 Y 1??
-        System.out.println(resultado[0]);
-        System.out.println(resultado[1]);
+        //System.out.println(resultado[0]);
+        //System.out.println(resultado[1]);
     }
 }

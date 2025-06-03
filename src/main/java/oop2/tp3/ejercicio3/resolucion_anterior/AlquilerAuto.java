@@ -1,6 +1,6 @@
-package oop2.tp3.ejercicio3;
+package oop2.tp3.ejercicio3.resolucion_anterior;
 
-public class AlquilerAuto extends TipoDeGasto{
+public class AlquilerAuto extends TipoDeGasto {
 
     public AlquilerAuto(String nombreGasto) {
         super(nombreGasto);

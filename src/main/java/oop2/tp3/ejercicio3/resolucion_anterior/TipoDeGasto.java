@@ -1,4 +1,4 @@
-package oop2.tp3.ejercicio3;
+package oop2.tp3.ejercicio3.resolucion_anterior;
 
 public abstract class TipoDeGasto {
     //La interfaz define el comportamiento y las clases concretas almacenan el estado

@@ -4,7 +4,6 @@ import org.jdbi.v3.core.Jdbi;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +38,7 @@ public class PersonaRepositoryTest {
     }
 
     @Test
-    public void buscarPorNombreTest_noEncuentra(){
+    public void buscarPorNombreTest_no_encuentra(){
         //Exercise
         personas = repo.buscarPorNombre("Vle");     //No existe
 
@@ -48,23 +47,23 @@ public class PersonaRepositoryTest {
     }
 
     @Test
-    public void buscarIdTest_existente(){
+    public void buscarIdTest_existe(){
 
         //Exercise
         persona = repo.buscarId(1L);
 
         //Verify
-        assertEquals(true, persona.isPresent());
+        assertTrue(persona.isPresent());        //Retorna booleano es != de ifPresent
     }
 
     @Test
-    public void buscarIdTest_inexistente(){
+    public void buscarIdTest_no_existe(){
 
         //Exercise
         persona = repo.buscarId(4L);        //No existe, solo hay 3 personas en el setUp
 
         //Verify
-        assertEquals(false, persona.isPresent());
+        assertFalse(persona.isPresent());
 
     }
 

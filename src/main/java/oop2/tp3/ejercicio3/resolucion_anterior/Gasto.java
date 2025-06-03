@@ -1,4 +1,4 @@
-package oop2.tp3.ejercicio3;
+package oop2.tp3.ejercicio3.resolucion_anterior;
 
 public class Gasto {
 

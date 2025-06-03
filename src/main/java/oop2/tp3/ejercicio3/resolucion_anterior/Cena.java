@@ -1,8 +1,8 @@
-package oop2.tp3.ejercicio3;
+package oop2.tp3.ejercicio3.resolucion_anterior;
 
-public class Desayuno extends TipoDeGasto{
+public class Cena extends TipoDeGasto {
 
-    public Desayuno(String nombreGasto) {
+    public Cena(String nombreGasto) {
         super(nombreGasto);
     }
 
@@ -13,7 +13,7 @@ public class Desayuno extends TipoDeGasto{
 
     @Override
     public boolean excedeLimite(double monto) {
-        if(monto > 1000){
+        if(monto > 5000) {
             return true;
         }
         return false;

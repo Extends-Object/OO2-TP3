@@ -1,4 +1,4 @@
-package oop2.tp3.ejercicio3;
+package oop2.tp3.ejercicio3.resolucion_anterior;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

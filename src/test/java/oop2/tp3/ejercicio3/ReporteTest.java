@@ -1,5 +1,6 @@
 package oop2.tp3.ejercicio3;
 
+import oop2.tp3.ejercicio3.resolucion_anterior.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

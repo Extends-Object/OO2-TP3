@@ -1,4 +1,5 @@
-package oop2.tp3.ejercicio3;
+package oop2.tp3.ejercicio3.resolucion_anterior;
+
 import java.util.List;
 
 public class ReporteDeGastos {
